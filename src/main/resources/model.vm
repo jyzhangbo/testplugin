@@ -1,0 +1,57 @@
+/********************************************************
+数据库持久化层(For MySQL5.1 Java)
+创建日期 $date
+作者 张博
+
+/********************************************************/
+
+package $packageName;
+
+import org.nutz.dao.entity.annotation.*;
+#foreach ($import in $table.Imports)
+#if ($import)
+import $import;
+#else
+
+#end
+#end
+
+@Table("${table.tableName}")
+public class ${table.EntityClassName}  implements Serializable {
+    /**
+     * 缺省的序列化值.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 表明. 
+    */
+    public static final String TBL_${table.tableName}="${table.tableName}";
+    
+    public ${table.EntityClassName}() {}
+
+#foreach ($column in $table.Columns)
+    /**
+     * 字段${column.ColumnName}在数据库中的名称.
+     */
+    public static final String FLD_${column.ColumnName} = "${column.ColumnName}";
+    
+    /**
+     * 字段${column.ColumnName}.
+     */
+    $column.ColumnAnnotation
+    private $column.SimpleJavaTypeName ${column.ColumnName}#if ($column.DefaultValue) = ${column.DefaultValueCode}#end;
+	
+#end
+#foreach ($column in $table.columns)
+    public void ${column.SetterMethodName}($column.SimpleJavaTypeName $column.ColumnName) {
+        this.$column.ColumnName = ${column.ColumnName};
+    }
+
+    public $column.SimpleJavaTypeName ${column.GetterMethodName}() {
+        return this.${column.ColumnName};
+    }
+
+#end
+
+}
