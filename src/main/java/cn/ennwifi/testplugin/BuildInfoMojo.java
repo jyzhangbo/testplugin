@@ -29,7 +29,7 @@ public class BuildInfoMojo extends AbstractMojo {
     String sourceDirectory = build.getSourceDirectory();
     String testOutputDirectory = build.getTestOutputDirectory();
     String testSourceDirectory = build.getTestSourceDirectory();
-    getLog().info("\n==========================\nProject build info:");
+    getLog().info("\n=======+===================\nProject build info:");
     String[] info = {outputDirectory, sourceDirectory, testOutputDirectory, testSourceDirectory};
     for (String item : info) {
       getLog().info("\t" + prefix + "   " + item);
