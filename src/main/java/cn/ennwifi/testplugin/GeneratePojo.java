@@ -16,6 +16,8 @@ import java.util.Map;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.nutz.dao.Sqls;
@@ -32,46 +34,46 @@ import cn.ennwifi.testplugin.model.ColumnDescriptor;
 import cn.ennwifi.testplugin.model.TableDescriptor;
 
 /**
- * @goal generate
- * @phase process-source
+ * generate the database pojo.
  *
  */
+@Mojo(name = "generate")
 public class GeneratePojo extends AbstractMojo {
 
   /**
-   * @parameter expression="${project.basedir}/src/main/java"
-   * @required
+   * path.
    */
+  @Parameter(defaultValue = "${project.basedir}/src/main/java", property = "path")
   private String path;
 
   /**
-   * @parameter expression=""
-   * @required
+   * packageName.
    */
+  @Parameter(property = "packageName", required = true)
   private String packageName;
 
   /**
-   * @parameter expression="com.mysql.jdbc.Driver"
-   * @required
+   * driver
    */
+  @Parameter(defaultValue = "com.mysql.jdbc.Driver", property = "driver", required = true)
   private String driver;
 
   /**
-   * @parameter expression=""
-   * @required
+   * jdbcurl.
    */
+  @Parameter(property = "jdbcurl", required = true)
   private String jdbcurl;
 
   /**
-   * @parameter expression="root"
-   * @required
+   * user.
    */
+  @Parameter(property = "user", required = true)
   private String user;
 
   /**
-   * @parameter expression="pwd"
-   * @required
+   * pwd.
    */
+  @Parameter(property = "pwd", required = true)
   private String pwd;
 
   public void execute() throws MojoExecutionException, MojoFailureException {

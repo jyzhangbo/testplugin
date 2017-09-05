@@ -3,24 +3,27 @@ package cn.ennwifi.testplugin;
 import org.apache.maven.model.Build;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 /**
- * @goal buildinfo
- * @phase pre-integration-test
+ * test maven plugin.
  *
  */
+@Mojo(name = "buildinfo")
 public class BuildInfoMojo extends AbstractMojo {
 
   /**
-   * @parameter expression="${project}"
-   * @readonly
+   * project.
    */
+  @Parameter(property = "project")
   private MavenProject project;
 
   /**
-   * @parameter expression="${buildinfo.prefix}" default-value="+++"
+   * profix.
    */
+  @Parameter(property = "prefix", defaultValue = "+++")
   private String prefix;
 
   public void execute() throws MojoExecutionException {

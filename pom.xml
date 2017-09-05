@@ -4,13 +4,31 @@
 
 	<groupId>cn.ennwifi</groupId>
 	<artifactId>testplugin</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>testplugin Maven Plugin</name>
+	<description>This is a maven plugin.</description>
+	<url>https://github.com/jyzhangbo/testplugin</url>
 
-	<!-- FIXME change it to the project's website -->
-	<url>http://maven.apache.org</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>zhangbo</name>
+			<email>jyzhangbo@gmail.com</email>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:https://github.com/jyzhangbo/testplugin.git</connection>
+		<developerConnection>scm:git:git@github.com:jyzhangbo/testplugin.git</developerConnection>
+		<url>https://github.com/jyzhangbo/testplugin</url>
+		<tag>testplugin-0.0.1</tag>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -125,16 +143,65 @@
 
 			</build>
 		</profile>
+		<profile>
+          <id>release</id>
+          <build>
+              <plugins>
+                  <!-- Source -->
+                  <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-source-plugin</artifactId>
+                      <version>2.2.1</version>
+                      <executions>
+                          <execution>
+                              <phase>package</phase>
+                              <goals>
+                                  <goal>jar-no-fork</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                  </plugin>
+                  <!-- Javadoc -->
+                  <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-javadoc-plugin</artifactId>
+                      <version>2.9.1</version>
+                      <executions>
+                          <execution>
+                              <phase>package</phase>
+                              <goals>
+                                  <goal>jar</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                  </plugin>
+                  <!-- GPG -->
+                  <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-gpg-plugin</artifactId>
+                      <version>1.5</version>
+                      <executions>
+                          <execution>
+                              <phase>verify</phase>
+                              <goals>
+                                  <goal>sign</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                  </plugin>
+              </plugins>
+          </build>
+          <distributionManagement>
+              <snapshotRepository>
+                  <id>oss-snapshots</id>
+                  <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+              </snapshotRepository>
+              <repository>
+                  <id>oss-releases</id>
+                  <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+              </repository>
+          </distributionManagement>
+      </profile>
 	</profiles>
 
-	<distributionManagement>
-		<repository>
-			<id>nexus-releases</id>
-			<url>http://maven.enncloud.cn/content/groups/public/</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<url>http://maven.enncloud.cn/content/repositories/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>

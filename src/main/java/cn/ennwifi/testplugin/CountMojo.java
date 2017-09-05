@@ -13,54 +13,53 @@ import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * @goal count
- * @phase process-source
+ * count the number of file.
  *
  */
+@Mojo(name = "count")
 public class CountMojo extends AbstractMojo {
 
   private static final String[] INCLUDES_DEFAULT = {"java", "xml", "sql", "properties"};
   private static final String[] RATIOS_DEFAULT = {"1.0", "0.25", "0.25", "0.25"};
   private static final String DOT = ".";
   /**
-   * @parameter expression="${project.basedir}"
-   * @required
-   * @readonly
+   * basedir.
    */
+  @Parameter(defaultValue = "${project.basedir}")
   private File basedir;
   /**
-   * @parameter expression="${project.build.sourceDirectory}"
-   * @required
-   * @readonly
+   * sourcedir.
    */
+  @Parameter(defaultValue = "${project.build.sourceDirectory}")
   private File sourcedir;
   /**
-   * @parameter expression="${project.build.testSourceDirectory}"
-   * @required
-   * @readonly
+   * testSourcedir.
    */
+  @Parameter(defaultValue = "${project.build.testSourceDirectory}")
   private File testSourcedir;
   /**
-   * @parameter expression="${project.resources}"
-   * @required
-   * @readonly
+   * resources.
    */
+  @Parameter(defaultValue = "${project.resources}")
   private List<Resource> resources;
   /**
-   * @parameter expression="${project.testResources}"
-   * @required
-   * @readonly
+   * testResources.
    */
+  @Parameter(defaultValue = "${project.testResources}")
   private List<Resource> testResources;
   /**
-   * @parameter
+   * includes.
    */
+  @Parameter(property = "includes")
   private String[] includes;
   /**
-   * @parameter
+   * ratios.
    */
+  @Parameter(property = "ratios")
   private String[] ratios;
 
   private Map<String, Double> ratioMap = new HashMap<String, Double>();
