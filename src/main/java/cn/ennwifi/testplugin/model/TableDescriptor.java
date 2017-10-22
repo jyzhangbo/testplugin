@@ -30,18 +30,16 @@ public class TableDescriptor {
     return columns;
   }
 
-  /**
-   * 获取表明.
-   * 
-   * @return
-   */
+ /**
+  * 获取表名.
+  * @return
+  */
   public String getTableName() {
-    return tableName.toUpperCase();
+    return tableName;
   }
 
   /**
    * 获取实体类名称.
-   * 
    * @return
    */
   public String getEntityClassName() {
