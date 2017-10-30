@@ -4,7 +4,7 @@
 
 	<groupId>cn.ennwifi</groupId>
 	<artifactId>testplugin</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.4</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>testplugin Maven Plugin</name>
@@ -27,7 +27,7 @@
 		<connection>scm:git:https://github.com/jyzhangbo/testplugin.git</connection>
 		<developerConnection>scm:git:git@github.com:jyzhangbo/testplugin.git</developerConnection>
 		<url>https://github.com/jyzhangbo/testplugin</url>
-		<tag>testplugin-0.0.2</tag>
+		<tag>testplugin-0.0.4</tag>
 	</scm>
 
 	<properties>
