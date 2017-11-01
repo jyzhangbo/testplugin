@@ -1,0 +1,15 @@
+/********************************************************
+数据库持久化层(For MySQL5.1 Java)
+创建日期 $date
+作者 张博
+
+/********************************************************/
+
+package $packageName;
+
+import java.util.List;
+
+public interface $interfaceName {
+
+	public List<String> getColumns();
+}

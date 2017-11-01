@@ -18,20 +18,26 @@ import $import;
 #end
 #end
 
-public class ${table.EntityClassName}  implements Serializable {
+public class ${table.EntityClassName}  implements ${interfaceName}, Serializable {
     /**
      * 缺省的序列化值.
      */
     private static final long serialVersionUID = 1L;
     
     public static List<String> columns= new ArrayList<>();
+    
+    /**
+     * 表明. 
+    */
+    public static final String TBL_${table.tableName}="${table.tableName}";
 
     public ${table.EntityClassName}() {}
 
-	static{
+	public List<String> getColumns(){
 #foreach ($column in $table.Columns)
 		columns.add("${column.ColumnName}");
 #end
+		return columns;
 	}
 #foreach ($column in $table.Columns)
     /**

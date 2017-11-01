@@ -77,6 +77,12 @@ public class Generate2Pojo extends AbstractMojo {
   @Parameter(property = "pwd", required = true)
   private String pwd;
 
+  /**
+   * 接口名称.
+   */
+  @Parameter(property = "interfaceName", required = true)
+  private String interfaceName;
+
   public void execute() throws MojoExecutionException, MojoFailureException {
     DruidDataSource ds = new DruidDataSource();
     ds.setDriverClassName(driver);
@@ -192,10 +198,10 @@ public class Generate2Pojo extends AbstractMojo {
       }
     }
 
+    String packagePath = packageName.replace('.', '/');
+
     for (Map.Entry<String, TableDescriptor> entry : tables.entrySet()) {
       TableDescriptor table = entry.getValue();
-
-      String packagePath = packageName.replace('.', '/');
 
       String className = table.getEntityClassName();
 
@@ -211,6 +217,7 @@ public class Generate2Pojo extends AbstractMojo {
       context.put("date", Times.getNowSDT());
       context.put("table", table);
       context.put("packageName", packageName);
+      context.put("interfaceName", interfaceName);
       StringWriter writer = new StringWriter();
 
       String templatePath = "/model2.vm";
@@ -232,6 +239,39 @@ public class Generate2Pojo extends AbstractMojo {
       Files.write(file, writer.toString().getBytes(Charset.forName("utf8")));
 
     }
+
+    // 生成接口文件
+    File file = new File(path, packagePath + "/" + interfaceName + ".java");
+    if (file.exists()) {
+      file.delete();
+    }
+    file.getParentFile().mkdirs();
+
+    VelocityContext context = new VelocityContext();
+    context.put("date", Times.getNowSDT());
+    context.put("packageName", packageName);
+    context.put("interfaceName", interfaceName);
+    StringWriter writer = new StringWriter();
+
+    String templatePath = "/model3.vm";
+
+    String template = "";
+    try {
+      getLog().info(this.getClass().getResourceAsStream(templatePath).toString());
+      template =
+          new String(Streams.readBytes(this.getClass().getResourceAsStream(templatePath)), Charset.forName("utf8"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    getLog().info(template);
+    VelocityEngine engine = new VelocityEngine();
+    engine.setProperty("runtime.references.strict", false);
+    engine.init();
+    engine.evaluate(context, writer, "generator", template);
+
+    Files.write(file, writer.toString().getBytes(Charset.forName("utf8")));
+
+
 
   }
 
